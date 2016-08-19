@@ -15,7 +15,7 @@ public class Localidad extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private JPanel contentPane;
+	private JPanel contentPanel;
 	private JTable tablaPersonas;
 	private JButton btnAgregar;
 	private JButton btnEditar;
@@ -30,10 +30,10 @@ public class Localidad extends JFrame
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 710, 470);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPanel = new JPanel();
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPanel);
+		contentPanel.setLayout(null);
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 823, 300);
