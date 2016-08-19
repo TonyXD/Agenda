@@ -12,12 +12,16 @@ import modelo.Agenda;
 import presentacion.reportes.ReporteAgenda;
 import presentacion.vista.VentanaPersona;
 import presentacion.vista.Vista;
+import presentacion.vista.Localidad;
+import presentacion.vista.ventanaContacto;;
 
 public class Controlador implements ActionListener
 {
 		private Vista vista;
 		private List<PersonaDTO> personas_en_tabla;
 		private VentanaPersona ventanaPersona; 
+		private Localidad ventanaLocalidad;
+		private ventanaContacto ventanaContacto;
 		private Agenda agenda;
 		
 		public Controlador(Vista vista, Agenda agenda)
@@ -97,6 +101,14 @@ public class Controlador implements ActionListener
 			{				
 				ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
 				reporte.mostrar();				
+			}
+			if(e.getSource() == this.ventanaPersona.getBtnAgregarEditarLocalidad())
+			{
+				this.ventanaLocalidad = new Localidad(this);
+			}
+			if(e.getSource() == this.ventanaPersona.getBtnAgregarEditarContacto())
+			{
+				this.ventanaContacto = new ventanaContacto(this);
 			}
 			else if(e.getSource() == this.ventanaPersona.getBtnAgregarPersona())
 			{

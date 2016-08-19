@@ -1,0 +1,9 @@
+CREATE TABLE `agenda`.`localidad` (
+  `idLocalidad` INT NOT NULL AUTO_INCREMENT,
+  `Descipcion` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idLocalidad`));
+
+  CREATE TABLE `agenda`.`contacto` (
+  `idContacto` INT NOT NULL AUTO_INCREMENT,
+  `Descripcion` VARCHAR(45) NULL,
+  PRIMARY KEY (`idContacto`));

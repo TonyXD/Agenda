@@ -2,9 +2,6 @@ package presentacion.vista;
 
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -25,6 +22,8 @@ public class VentanaPersona extends JFrame
 	private JTextField txtNombre;
 	private JTextField txtTelefono;
 	private JButton btnAgregarPersona;
+	private JButton btnAgregarEditarLocalidad;
+	private JButton btnAgregarEditarContacto;
 	private Controlador controlador;
 	private JTextField txtDireccion;
 	private JTextField txtNroCalle;
@@ -74,8 +73,18 @@ public class VentanaPersona extends JFrame
 		
 		btnAgregarPersona = new JButton("Agregar");
 		btnAgregarPersona.addActionListener(this.controlador);
-		btnAgregarPersona.setBounds(575, 376, 89, 23);
+		btnAgregarPersona.setBounds(250, 380, 80, 20);
 		panel.add(btnAgregarPersona);
+
+		btnAgregarEditarLocalidad = new JButton("Agregar/Editar Localidad");
+		btnAgregarEditarLocalidad.addActionListener(this.controlador);
+		btnAgregarEditarLocalidad.setBounds(330, 380, 160, 20);
+		panel.add(btnAgregarEditarLocalidad);
+		
+		btnAgregarEditarContacto = new JButton("Agregar/Editar Contacto");
+		btnAgregarEditarContacto.addActionListener(this.controlador);
+		btnAgregarEditarContacto.setBounds(490, 380, 180, 20);
+		panel.add(btnAgregarEditarContacto);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 33, 654, 2);
@@ -191,6 +200,16 @@ public class VentanaPersona extends JFrame
 	public JButton getBtnAgregarPersona() 
 	{
 		return btnAgregarPersona;
+	}
+	
+	public JButton getBtnAgregarEditarLocalidad() 
+	{
+		return btnAgregarEditarLocalidad;
+	}
+	
+	public JButton getBtnAgregarEditarContacto() 
+	{
+		return btnAgregarEditarContacto;
 	}
 	
 	public JTextField getTxtDireccion() 
