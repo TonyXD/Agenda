@@ -7,8 +7,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
 import presentacion.controlador.Controlador;
+
 
 
 public class Localidad extends JFrame
@@ -20,13 +20,13 @@ public class Localidad extends JFrame
 	private JButton btnAgregar;
 	private JButton btnEditar;
 	private DefaultTableModel modelPersonas;
-	private Controlador controlador;
-	private  String[] nombreColumnas = {"Nombre y apellido","Teléfono", "Direccion", "NroCalle", "NroPiso" ,"NroDpto", "Localidad", "Mail", "Fecha de Cumpleaños", "Contacto"};
+	private Controlador Controlador;
+	private  String[] nombreColumnas = {"#","Localidad"};
 	
 	public Localidad(Controlador controlador) 
 	{
 		super();
-		this.setControlador(controlador);
+		this.Controlador = controlador;
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 710, 470);
@@ -36,17 +36,17 @@ public class Localidad extends JFrame
 		contentPanel.setLayout(null);
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 823, 300);
+		frame.setBounds(100, 100, 817, 480);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 797, 262);
+		panel.setBounds(0, 0, 398, 262);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JScrollPane spPersonas = new JScrollPane();
-		spPersonas.setBounds(10, 11, 777, 182);
+		spPersonas.setBounds(10, 11, 311, 182);
 		panel.add(spPersonas);
 		
 		modelPersonas = new DefaultTableModel(null,nombreColumnas);
@@ -60,6 +60,7 @@ public class Localidad extends JFrame
 		spPersonas.setViewportView(tablaPersonas);
 		
 		btnAgregar = new JButton("Agregar");
+		btnAgregar.addActionListener(this.Controlador);
 		btnAgregar.setBounds(10, 228, 89, 23);
 		panel.add(btnAgregar);
 		
@@ -68,14 +69,6 @@ public class Localidad extends JFrame
 		panel.add(btnEditar);
 		
 		this.setVisible(true);
-	}
-
-	public Controlador getControlador() {
-		return controlador;
-	}
-
-	public void setControlador(Controlador controlador) {
-		this.controlador = controlador;
 	}
 	
 }
