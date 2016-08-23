@@ -7,14 +7,17 @@ import java.util.List;
 
 import javax.swing.JTable;
 
+import dto.ContactoDTO;
 import dto.LocalidadDTO;
 import dto.PersonaDTO;
 import modelo.Agenda;
+import modelo.Contacto;
 import modelo.Localidad;
 import presentacion.reportes.ReporteAgenda;
 import presentacion.vista.VentanaLocalidad;
 import presentacion.vista.VentanaPersona;
-import presentacion.vista.Vista;;
+import presentacion.vista.Vista;
+import presentacion.vista.ventanaContacto;;
 
 public class Controlador implements ActionListener
 {
@@ -28,6 +31,12 @@ public class Controlador implements ActionListener
 		private List<LocalidadDTO> ListaDeLocalidades;
 		private Localidad localidad;
 		private LocalidadDTO localidadSeleccionada;
+		
+		
+		private ventanaContacto ventanaContacto;
+		private List<ContactoDTO> ListaDeContactos;
+		private Contacto contacto;
+		private ContactoDTO contactoSeleccionada;
 		
 		public Controlador(Vista vista, Agenda agenda, Localidad localidad)
 		{
@@ -65,6 +74,20 @@ public class Controlador implements ActionListener
 			}
 			this.vista.show();
 		}
+		
+		private void llenarDdlLocalidades()
+		{
+//			this.ListaDeLocalidades = localidad.BuscarLocalidades();
+//
+//			String[] array = new String[this.ListaDeLocalidades.size()];
+//			
+//			for (int i = 0; i < this.ListaDeLocalidades.size(); i ++)
+//			{
+//				array[i] = this.ListaDeLocalidades.get(i).getDescripcion();
+//			}
+//			
+//			this.ventanaPersona.setComboBox(array);
+		}
 
 		private void llenarTablaLocalidades()
 		{
@@ -89,6 +112,7 @@ public class Controlador implements ActionListener
 		{
 			if(e.getSource() == this.vista.getBtnAgregar())
 			{
+				this.llenarDdlLocalidades();
 				this.ventanaPersona = new VentanaPersona(this);
 			}
 			else if(e.getSource() == this.vista.getBtnEditar())
@@ -158,12 +182,12 @@ public class Controlador implements ActionListener
 				this.ventanaPersona.dispose();
 				
 			}
+			//Funcionalidad botones Ventana Localidad
 			else if(e.getSource() == this.ventanaPersona.getBtnAgregarEditarLocalidad())
 			{
 				this.ventanaLocalidad = new VentanaLocalidad(this);
 				this.llenarTablaLocalidades();
 			}
-			//Funcionalidad botones Ventana Localidad
 			else if(e.getSource() == this.ventanaLocalidad.getBtnAgregar())
 			{
 				LocalidadDTO newLocalidad = new LocalidadDTO();
@@ -193,6 +217,40 @@ public class Controlador implements ActionListener
 				this.localidadSeleccionada = new LocalidadDTO(id, Descripcion, codigoPostal);
 				
 				this.ventanaLocalidad.cargarTextBox(localidadSeleccionada);					
+				}				
+			}
+			//Funcionalidad botones Ventana Contacto
+			else if(e.getSource() == this.ventanaPersona.getBtnAgregarEditarContacto())
+			{
+				this.ventanaContacto = new ventanaContacto(this);
+//				this.llenarTablaLocalidades();
+			}
+			else if(e.getSource() == this.ventanaContacto.getBtnAgregar())
+			{
+				ContactoDTO newContacto = new ContactoDTO();
+				newContacto.setDescripcion(this.ventanaContacto.getDescripcion().getText());
+				this.contacto.insertLocalidad(newContacto);
+				this.ventanaContacto.limpiarTextBox();
+				//this.llenarTablaLocalidades();
+			}
+			else if(e.getSource() == this.ventanaContacto.getBtnEditar())
+			{
+				this.contactoSeleccionada.setDescripcion(this.ventanaContacto.getDescripcion().getText());
+				this.contacto.updateLocalidad(this.contactoSeleccionada);
+				this.ventanaContacto.limpiarTextBox();
+//				this.llenarTablaLocalidades();
+			}
+			else if(e.getSource() == this.ventanaContacto.getBtnCargar())
+			{
+				int fila = this.ventanaContacto.getTablaLocalidades().getSelectedRow();
+				if(fila != -1){
+				JTable tabla =  this.ventanaContacto.getTablaLocalidades();
+				int id = (int) tabla.getValueAt(fila, 0);
+				String Descripcion = (String) tabla.getValueAt(fila, 1);
+				
+				this.contactoSeleccionada = new ContactoDTO(id, Descripcion);
+				
+				this.ventanaContacto.cargarTextBox(contactoSeleccionada);					
 				}				
 			}
 		}

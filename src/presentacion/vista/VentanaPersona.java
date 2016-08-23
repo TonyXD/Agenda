@@ -35,7 +35,8 @@ public class VentanaPersona extends JFrame
 	private JTextField txtAnioCumpleanios;
 	private JComboBox<String> ddlLocalidad;
 	private JComboBox<String> ddlTipoContacto;
-
+	private DefaultComboBoxModel<String> model;
+	
 	public VentanaPersona(Controlador controlador) 
 	{
 		super();
@@ -179,8 +180,8 @@ public class VentanaPersona extends JFrame
 		lblLocalidad.setBounds(185, 116, 75, 14);
 		panel.add(lblLocalidad);
 		
-		ddlLocalidad = new JComboBox<String> ();
-		ddlLocalidad.setModel(new DefaultComboBoxModel<String>(new String[] {"- Seleccione - ", "San miguel", "Jose C Paz", "Del Viso", "Pilar", "Polvorines"}));
+	
+		ddlLocalidad = new JComboBox<>();
 		ddlLocalidad.setBounds(185, 141, 130, 20);
 		panel.add(ddlLocalidad);
 		
@@ -246,6 +247,11 @@ public class VentanaPersona extends JFrame
 	{
 		return ddlTipoContacto.getSelectedItem().toString();
 	}
+
+	public void setComboBox(String[] list) {
+	    model = new DefaultComboBoxModel<String>(list);
+	    ddlTipoContacto.setModel(model);
+	}
 	
 	public void cargarPantalla(String nombre, String telefono, String direccion, String nroCalle, String nroPiso,
 			String nroDpto, String localidad, String dirEmail, LocalDate cumpleaños, String tipoContacto)
@@ -265,6 +271,7 @@ public class VentanaPersona extends JFrame
 		this.txtAnioCumpleanios.setText(Integer.toString(cumpleaños.getYear()));
 	}
 
+	
 	public LocalDate getTextFechaCumpleanios() {
 		return LocalDate.of(Integer.parseInt(txtAnioCumpleanios.getText()), Integer.parseInt(txtMesCumpleanios.getText()), Integer.parseInt(txtDiaCumpleanios.getText()));
 	}
