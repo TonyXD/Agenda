@@ -27,6 +27,7 @@ public class Controlador implements ActionListener
 		private VentanaLocalidad ventanaLocalidad;
 		private List<LocalidadDTO> ListaDeLocalidades;
 		private Localidad localidad;
+		private LocalidadDTO localidadSeleccionada;
 		
 		public Controlador(Vista vista, Agenda agenda, Localidad localidad)
 		{
@@ -39,7 +40,7 @@ public class Controlador implements ActionListener
 			this.personas_en_tabla = null;
 			
 			this.localidad = localidad;
-			this.ListaDeLocalidades = null;
+			this.ListaDeLocalidades = null;			
 		}
 		
 		public void inicializar()
@@ -128,11 +129,6 @@ public class Controlador implements ActionListener
 				ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
 				reporte.mostrar();				
 			}
-			if(e.getSource() == this.ventanaPersona.getBtnAgregarEditarLocalidad())
-			{
-				this.ventanaLocalidad = new VentanaLocalidad(this);
-				this.llenarTablaLocalidades();
-			}
 			else if(e.getSource() == this.ventanaPersona.getBtnAgregarPersona())
 			{
 				int fila = this.vista.getTablaPersonas().getSelectedRow();
@@ -161,6 +157,43 @@ public class Controlador implements ActionListener
 				this.llenarTabla();
 				this.ventanaPersona.dispose();
 				
+			}
+			else if(e.getSource() == this.ventanaPersona.getBtnAgregarEditarLocalidad())
+			{
+				this.ventanaLocalidad = new VentanaLocalidad(this);
+				this.llenarTablaLocalidades();
+			}
+			//Funcionalidad botones Ventana Localidad
+			else if(e.getSource() == this.ventanaLocalidad.getBtnAgregar())
+			{
+				LocalidadDTO newLocalidad = new LocalidadDTO();
+				newLocalidad.setDescripcion(this.ventanaLocalidad.getDescripcion().getText());
+				newLocalidad.setCodigoPostal(Integer.parseInt(this.ventanaLocalidad.getCodigoPostar().getText()));
+				this.localidad.insertLocalidad(newLocalidad);
+				this.ventanaLocalidad.limpiarTextBox();
+				this.llenarTablaLocalidades();
+			}
+			else if(e.getSource() == this.ventanaLocalidad.getBtnEditar())
+			{
+				this.localidadSeleccionada.setDescripcion(this.ventanaLocalidad.getDescripcion().getText());
+				this.localidadSeleccionada.setCodigoPostal(Integer.parseInt(this.ventanaLocalidad.getCodigoPostar().getText()));
+				this.localidad.updateLocalidad(this.localidadSeleccionada);
+				this.ventanaLocalidad.limpiarTextBox();
+				this.llenarTablaLocalidades();
+			}
+			else if(e.getSource() == this.ventanaLocalidad.getBtnCargar())
+			{
+				int fila = this.ventanaLocalidad.getTablaLocalidades().getSelectedRow();
+				if(fila != -1){
+				JTable tabla =  this.ventanaLocalidad.getTablaLocalidades();
+				int id = (int) tabla.getValueAt(fila, 0);
+				String Descripcion = (String) tabla.getValueAt(fila, 1);
+				int codigoPostal = (int) tabla.getValueAt(fila, 2);
+				
+				this.localidadSeleccionada = new LocalidadDTO(id, Descripcion, codigoPostal);
+				
+				this.ventanaLocalidad.cargarTextBox(localidadSeleccionada);					
+				}				
 			}
 		}
 

@@ -13,6 +13,11 @@ public class LocalidadDTO {
 		this.CodigoPostal = CP;
 	}	
 	
+	public LocalidadDTO()
+	{
+		
+	}	
+	
 	
 	public int getIdLocalidad() {
 		return IdLocalidad;

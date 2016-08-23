@@ -13,6 +13,9 @@ public class LocalidadDAO {
 
 	
 	private static final String selectAll = "SELECT * FROM localidad";
+	private static final String insert = "INSERT INTO localidad(Descripcion, CodigoPostal) VALUES(?, ?)";
+	private static final String update = "UPDATE localidad SET Descripcion= ?, CodigoPostal= ? WHERE idLocalidad= ?";
+	
 	private static final Conexion conexion = Conexion.getConexion();
 	
 	
@@ -41,5 +44,51 @@ public class LocalidadDAO {
 			conexion.cerrarConexion();
 		}
 		return localidad;
+	}
+
+	public boolean insert(LocalidadDTO agregarLocalidad) {
+		PreparedStatement statement;
+		try 
+		{
+			
+			statement = conexion.getSQLConexion().prepareStatement(insert);
+			statement.setString(1, agregarLocalidad.getDescripcion());
+			statement.setInt(2, agregarLocalidad.getCodigoPostal());
+			if(statement.executeUpdate() > 0) //Si se ejecut� devuelvo true
+				return true;
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		finally //Se ejecuta siempre
+		{
+			conexion.cerrarConexion();
+		}
+		return false;		
+	}
+	
+	public boolean update(LocalidadDTO editarLocalidad) {
+		PreparedStatement statement;
+		try 
+		{
+		    		    
+			statement = conexion.getSQLConexion().prepareStatement(update);			
+			statement.setString(1, editarLocalidad.getDescripcion());
+			statement.setInt(2, editarLocalidad.getCodigoPostal());
+			statement.setInt(3, editarLocalidad.getIdLocalidad());
+			if(statement.executeUpdate() > 0) 
+				return true;
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		finally //Se ejecuta siempre
+		{
+			conexion.cerrarConexion();
+		}
+		return false;
+		
 	}
 }

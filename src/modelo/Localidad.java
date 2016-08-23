@@ -18,4 +18,14 @@ public class Localidad {
 	{
 		return localidad.readAll();		
 	}
+	
+	public void insertLocalidad(LocalidadDTO agregarLocalidad)
+	{
+		localidad.insert(agregarLocalidad);
+	}
+	
+	public void updateLocalidad(LocalidadDTO editarLocalidad) {
+		localidad.update(editarLocalidad);
+	}
+	
 }

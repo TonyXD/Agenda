@@ -2,8 +2,6 @@ package presentacion.vista;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.util.List;
-import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -78,6 +76,8 @@ public class VentanaLocalidad extends JFrame
 		
 		btnEditar = new JButton("Editar");
 		btnEditar.setBounds(274, 528, 89, 23);
+		btnEditar.addActionListener(this.Controlador);
+		getContentPane().setLayout(null);
 		getContentPane().add(btnEditar);
 		
 		JSeparator separator = new JSeparator();
@@ -126,18 +126,30 @@ public class VentanaLocalidad extends JFrame
 		
 		btnCargar = new JButton("Cargar");
 		btnCargar.setBounds(373, 366, 89, 23);
+		btnCargar.addActionListener(this.Controlador);
+		getContentPane().setLayout(null);
 		getContentPane().add(btnCargar);
 		
 		this.setVisible(true);
 	}
 
+	public void cargarTextBox(LocalidadDTO localidad)
+	{
+		txt_Descripcion.setText(localidad.getDescripcion());
+		txt_CodigoPostal.setText(Integer.toString(localidad.getCodigoPostal()));
+	}
+	public void limpiarTextBox()
+	{
+		txt_Descripcion.setText("");
+		txt_CodigoPostal.setText("");
+	}
 	
 	//Getters
 	public JButton getBtnAgregar()
 	{
 		return this.btnAgregar;
 	}
-	public JButton getBtnEditad()
+	public JButton getBtnEditar()
 	{
 		return this.btnEditar;
 	}
