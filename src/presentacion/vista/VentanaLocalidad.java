@@ -1,23 +1,26 @@
 package presentacion.vista;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.util.List;
+import java.util.Vector;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import presentacion.controlador.Controlador;
 import javax.swing.JSeparator;
-import java.awt.Font;
-import javax.swing.SwingConstants;
+import javax.swing.JTable;
 import javax.swing.JTextField;
-import java.awt.Color;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
+import dto.LocalidadDTO;
+import presentacion.controlador.Controlador;
 
 
 
-public class Localidad extends JFrame
+public class VentanaLocalidad extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -26,6 +29,7 @@ public class Localidad extends JFrame
 	//BOTONES
 	private JButton btnAgregar;
 	private JButton btnEditar;
+	private JButton btnCargar;
 
 	//TABLA
 	private JTable tbl_Localidades;
@@ -37,7 +41,7 @@ public class Localidad extends JFrame
 	private JTextField txt_CodigoPostal;
 	
 	
-	public Localidad(Controlador controlador) 
+	public VentanaLocalidad(Controlador controlador) 
 	{
 		super();
 		this.Controlador = controlador;
@@ -51,7 +55,7 @@ public class Localidad extends JFrame
 		frame.getContentPane().setLayout(null);
 		
 		JScrollPane scrollBarLocalidad = new JScrollPane();
-		scrollBarLocalidad.setBounds(10, 65, 464, 312);
+		scrollBarLocalidad.setBounds(10, 65, 464, 290);
 		getContentPane().add(scrollBarLocalidad);
 		
 		modelLocalidad = new DefaultTableModel(null,nombreColumnas);
@@ -87,7 +91,7 @@ public class Localidad extends JFrame
 		getContentPane().add(lblLocalidades);
 		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(10, 388, 464, 2);
+		separator_1.setBounds(10, 400, 464, 2);
 		getContentPane().add(separator_1);
 		
 		JLabel lblDescripcion = new JLabel("Descripcion");
@@ -105,22 +109,24 @@ public class Localidad extends JFrame
 		getContentPane().add(separator_2);
 		
 		txt_Descripcion = new JTextField();
-		txt_Descripcion.setEnabled(false);
 		txt_Descripcion.setBounds(20, 441, 170, 20);
 		getContentPane().add(txt_Descripcion);
 		txt_Descripcion.setColumns(10);
 		
 		txt_CodigoPostal = new JTextField();
-		txt_CodigoPostal.setEnabled(false);
 		txt_CodigoPostal.setBounds(277, 441, 170, 20);
 		getContentPane().add(txt_CodigoPostal);
 		txt_CodigoPostal.setColumns(10);
 		
-		JLabel lblParaRealizarUna = new JLabel("[ Para realizar una edicion seleccione primero un campo de la tabla ]");
+		JLabel lblParaRealizarUna = new JLabel("[ Para realizar una edicion seleccione primero un campo de la tabla y cargar los campos ]");
 		lblParaRealizarUna.setHorizontalAlignment(SwingConstants.CENTER);
 		lblParaRealizarUna.setForeground(new Color(0, 0, 139));
 		lblParaRealizarUna.setBounds(10, 497, 464, 14);
 		getContentPane().add(lblParaRealizarUna);
+		
+		btnCargar = new JButton("Cargar");
+		btnCargar.setBounds(373, 366, 89, 23);
+		getContentPane().add(btnCargar);
 		
 		this.setVisible(true);
 	}
@@ -135,6 +141,10 @@ public class Localidad extends JFrame
 	{
 		return this.btnEditar;
 	}
+	public JButton getBtnCargar()
+	{
+		return this.btnCargar;
+	}
 	public JTextField getDescripcion()
 	{
 		return this.txt_Descripcion;
@@ -147,5 +157,11 @@ public class Localidad extends JFrame
 	{
 		return this.tbl_Localidades;
 	}
-	
+	public DefaultTableModel getTablaModel()
+	{
+		return this.modelLocalidad;
+	}
+	public String[] getNombreColumnas() {
+		return this.nombreColumnas;
+	}
 }

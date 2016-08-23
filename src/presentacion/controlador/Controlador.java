@@ -7,24 +7,28 @@ import java.util.List;
 
 import javax.swing.JTable;
 
+import dto.LocalidadDTO;
 import dto.PersonaDTO;
 import modelo.Agenda;
+import modelo.Localidad;
 import presentacion.reportes.ReporteAgenda;
+import presentacion.vista.VentanaLocalidad;
 import presentacion.vista.VentanaPersona;
-import presentacion.vista.Vista;
-import presentacion.vista.Localidad;
-import presentacion.vista.ventanaContacto;;
+import presentacion.vista.Vista;;
 
 public class Controlador implements ActionListener
 {
 		private Vista vista;
 		private List<PersonaDTO> personas_en_tabla;
 		private VentanaPersona ventanaPersona; 
-		private Localidad ventanaLocalidad;
-		private ventanaContacto ventanaContacto;
 		private Agenda agenda;
 		
-		public Controlador(Vista vista, Agenda agenda)
+
+		private VentanaLocalidad ventanaLocalidad;
+		private List<LocalidadDTO> ListaDeLocalidades;
+		private Localidad localidad;
+		
+		public Controlador(Vista vista, Agenda agenda, Localidad localidad)
 		{
 			this.vista = vista;
 			this.vista.getBtnAgregar().addActionListener(this);
@@ -33,6 +37,9 @@ public class Controlador implements ActionListener
 			this.vista.getBtnReporte().addActionListener(this);
 			this.agenda = agenda;
 			this.personas_en_tabla = null;
+			
+			this.localidad = localidad;
+			this.ListaDeLocalidades = null;
 		}
 		
 		public void inicializar()
@@ -58,6 +65,25 @@ public class Controlador implements ActionListener
 			this.vista.show();
 		}
 
+		private void llenarTablaLocalidades()
+		{
+			this.ventanaLocalidad.getTablaModel().setRowCount(0);
+			this.ventanaLocalidad.getTablaModel().setColumnCount(0);
+			this.ventanaLocalidad.getTablaModel().setColumnIdentifiers(this.ventanaLocalidad.getNombreColumnas());
+			
+			this.ListaDeLocalidades = localidad.BuscarLocalidades();
+			if(this.ListaDeLocalidades != null)
+			{				
+				for (int i = 0; i < this.ListaDeLocalidades.size(); i ++)
+				{
+					Object[] fila = {this.ListaDeLocalidades.get(i).getIdLocalidad(), this.ListaDeLocalidades.get(i).getDescripcion(),
+							this.ListaDeLocalidades.get(i).getCodigoPostal()};
+					this.ventanaLocalidad.getTablaModel().addRow(fila);
+				}	
+			}
+			
+		}
+		
 		public void actionPerformed(ActionEvent e) 
 		{
 			if(e.getSource() == this.vista.getBtnAgregar())
@@ -104,11 +130,8 @@ public class Controlador implements ActionListener
 			}
 			if(e.getSource() == this.ventanaPersona.getBtnAgregarEditarLocalidad())
 			{
-				this.ventanaLocalidad = new Localidad(this);
-			}
-			if(e.getSource() == this.ventanaPersona.getBtnAgregarEditarContacto())
-			{
-				this.ventanaContacto = new ventanaContacto(this);
+				this.ventanaLocalidad = new VentanaLocalidad(this);
+				this.llenarTablaLocalidades();
 			}
 			else if(e.getSource() == this.ventanaPersona.getBtnAgregarPersona())
 			{
