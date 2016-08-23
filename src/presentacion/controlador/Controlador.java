@@ -51,10 +51,10 @@ public class Controlador implements ActionListener
 			this.personas_en_tabla = null;
 			
 			this.localidad = localidad;
-			this.ListaDeLocalidades = null;			
+			this.ListaDeLocalidades = null;	
 			
 			this.contacto = contacto;
-			this.ListaDeContactos = null;	
+			this.ListaDeContactos = null;
 		}
 		
 		public void inicializar()
@@ -227,10 +227,10 @@ public class Controlador implements ActionListener
 			}
 			else if(this.ventanaLocalidad!= null && e.getSource() == this.ventanaLocalidad.getBtnAgregar())
 			{
-				LocalidadDTO newLocalidad = new LocalidadDTO();				
-				if(isNumeric(this.ventanaLocalidad.getCodigoPostar().getText()) || this.ventanaLocalidad.getDescripcion().getText().length() > 0)
-				{
-					newLocalidad.setDescripcion(this.ventanaLocalidad.getDescripcion().getText());
+				LocalidadDTO newLocalidad = new LocalidadDTO();			
+				newLocalidad.setDescripcion(this.ventanaLocalidad.getDescripcion().getText());
+				if(isNumeric(this.ventanaLocalidad.getCodigoPostar().getText()))
+				{					
 					newLocalidad.setCodigoPostal(Integer.parseInt(this.ventanaLocalidad.getCodigoPostar().getText()));
 					this.localidad.insertLocalidad(newLocalidad);
 					this.ventanaLocalidad.limpiarTextBox();
@@ -243,19 +243,27 @@ public class Controlador implements ActionListener
 				
 			}
 			else if(this.ventanaLocalidad!= null && e.getSource() == this.ventanaLocalidad.getBtnEditar())
-			{				
-				if(isNumeric(this.ventanaLocalidad.getCodigoPostar().getText()) || this.ventanaLocalidad.getDescripcion().getText().length() > 0)
+			{			
+				if( this.localidadSeleccionada != null)
 				{
-					this.localidadSeleccionada.setDescripcion(this.ventanaLocalidad.getDescripcion().getText());
-					this.localidadSeleccionada.setCodigoPostal(Integer.parseInt(this.ventanaLocalidad.getCodigoPostar().getText()));
-					this.localidad.updateLocalidad(this.localidadSeleccionada);
-					this.ventanaLocalidad.limpiarTextBox();
-					this.llenarTablaLocalidades();
+					if(isNumeric(this.ventanaLocalidad.getCodigoPostar().getText()) && this.ventanaLocalidad.getDescripcion().getText().length() > 0)
+					{	
+						this.localidadSeleccionada.setDescripcion(this.ventanaLocalidad.getDescripcion().getText());
+						this.localidadSeleccionada.setCodigoPostal(Integer.parseInt(this.ventanaLocalidad.getCodigoPostar().getText()));
+						this.localidad.updateLocalidad(this.localidadSeleccionada);
+						this.ventanaLocalidad.limpiarTextBox();
+						this.llenarTablaLocalidades();
+					}
+					else 
+					{
+						JOptionPane.showMessageDialog(null, "Los datos que esta pasando no son validos");
+					}
 				}
-				else 
+				else
 				{
-					JOptionPane.showMessageDialog(null, "Los datos que esta pasando no son validos");
+					JOptionPane.showMessageDialog(null, "Debe cargar una localidad");
 				}
+				
 			}
 			else if(this.ventanaLocalidad!= null && e.getSource() == this.ventanaLocalidad.getBtnCargar())
 			{
@@ -294,17 +302,25 @@ public class Controlador implements ActionListener
 			}
 			else if(this.ventanaContacto!= null && e.getSource() == this.ventanaContacto.getBtnEditar())
 			{
-				if(this.ventanaContacto.getDescripcion().getText().length() > 0)
+				if( this.contactoSeleccionada != null)
 				{
-					this.contactoSeleccionada.setDescripcion(this.ventanaContacto.getDescripcion().getText());
-					this.contacto.updateContacto(this.contactoSeleccionada);
-					this.ventanaContacto.limpiarTextBox();
-					this.llenarTablaContacto();
+					if(this.ventanaContacto.getDescripcion().getText().length() > 0)
+					{
+						this.contactoSeleccionada.setDescripcion(this.ventanaContacto.getDescripcion().getText());
+						this.contacto.updateContacto(this.contactoSeleccionada);
+						this.ventanaContacto.limpiarTextBox();
+						this.llenarTablaContacto();
+					}
+					else 
+					{
+						JOptionPane.showMessageDialog(null, "Los datos que esta pasando no son validos");
+					}
 				}
 				else 
 				{
-					JOptionPane.showMessageDialog(null, "Los datos que esta pasando no son validos");
+					JOptionPane.showMessageDialog(null, "Debe cargar un Contacto");
 				}
+				
 				
 			}
 			else if(this.ventanaContacto!= null && e.getSource() == this.ventanaContacto.getBtnCargar())
