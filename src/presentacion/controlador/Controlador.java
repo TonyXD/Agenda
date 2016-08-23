@@ -227,10 +227,10 @@ public class Controlador implements ActionListener
 			}
 			else if(this.ventanaLocalidad!= null && e.getSource() == this.ventanaLocalidad.getBtnAgregar())
 			{
-				LocalidadDTO newLocalidad = new LocalidadDTO();
-				newLocalidad.setDescripcion(this.ventanaLocalidad.getDescripcion().getText());
-				if(isNumeric(this.ventanaLocalidad.getCodigoPostar().getText()))
+				LocalidadDTO newLocalidad = new LocalidadDTO();				
+				if(isNumeric(this.ventanaLocalidad.getCodigoPostar().getText()) || this.ventanaLocalidad.getDescripcion().getText().length() > 0)
 				{
+					newLocalidad.setDescripcion(this.ventanaLocalidad.getDescripcion().getText());
 					newLocalidad.setCodigoPostal(Integer.parseInt(this.ventanaLocalidad.getCodigoPostar().getText()));
 					this.localidad.insertLocalidad(newLocalidad);
 					this.ventanaLocalidad.limpiarTextBox();
@@ -243,10 +243,10 @@ public class Controlador implements ActionListener
 				
 			}
 			else if(this.ventanaLocalidad!= null && e.getSource() == this.ventanaLocalidad.getBtnEditar())
-			{
-				this.localidadSeleccionada.setDescripcion(this.ventanaLocalidad.getDescripcion().getText());
-				if(isNumeric(this.ventanaLocalidad.getCodigoPostar().getText()))
+			{				
+				if(isNumeric(this.ventanaLocalidad.getCodigoPostar().getText()) || this.ventanaLocalidad.getDescripcion().getText().length() > 0)
 				{
+					this.localidadSeleccionada.setDescripcion(this.ventanaLocalidad.getDescripcion().getText());
 					this.localidadSeleccionada.setCodigoPostal(Integer.parseInt(this.ventanaLocalidad.getCodigoPostar().getText()));
 					this.localidad.updateLocalidad(this.localidadSeleccionada);
 					this.ventanaLocalidad.limpiarTextBox();
@@ -280,17 +280,32 @@ public class Controlador implements ActionListener
 			else if(this.ventanaContacto!= null && e.getSource() == this.ventanaContacto.getBtnAgregar())
 			{
 				ContactoDTO newContacto = new ContactoDTO();
-				newContacto.setDescripcion(this.ventanaContacto.getDescripcion().getText());
-				this.contacto.insertContacto(newContacto);
-				this.ventanaContacto.limpiarTextBox();
-				this.llenarTablaContacto();
+				if(this.ventanaContacto.getDescripcion().getText().length() > 0)
+				{
+					newContacto.setDescripcion(this.ventanaContacto.getDescripcion().getText());
+					this.contacto.insertContacto(newContacto);
+					this.ventanaContacto.limpiarTextBox();
+					this.llenarTablaContacto();
+				}
+				else 
+				{
+					JOptionPane.showMessageDialog(null, "Los datos que esta pasando no son validos");
+				}
 			}
 			else if(this.ventanaContacto!= null && e.getSource() == this.ventanaContacto.getBtnEditar())
 			{
-				this.contactoSeleccionada.setDescripcion(this.ventanaContacto.getDescripcion().getText());
-				this.contacto.updateContacto(this.contactoSeleccionada);
-				this.ventanaContacto.limpiarTextBox();
-				this.llenarTablaContacto();
+				if(this.ventanaContacto.getDescripcion().getText().length() > 0)
+				{
+					this.contactoSeleccionada.setDescripcion(this.ventanaContacto.getDescripcion().getText());
+					this.contacto.updateContacto(this.contactoSeleccionada);
+					this.ventanaContacto.limpiarTextBox();
+					this.llenarTablaContacto();
+				}
+				else 
+				{
+					JOptionPane.showMessageDialog(null, "Los datos que esta pasando no son validos");
+				}
+				
 			}
 			else if(this.ventanaContacto!= null && e.getSource() == this.ventanaContacto.getBtnCargar())
 			{
