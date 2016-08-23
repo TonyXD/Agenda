@@ -2,7 +2,6 @@ package presentacion.vista;
 
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -280,10 +279,31 @@ public class VentanaPersona extends JFrame
 	}
 
 	
-	public LocalDate getTextFechaCumpleanios() {
-		return LocalDate.of(Integer.parseInt(txtAnioCumpleanios.getText()), Integer.parseInt(txtMesCumpleanios.getText()), Integer.parseInt(txtDiaCumpleanios.getText()));
+	public LocalDate getTextFechaCumpleanios()
+	{
+		if(isNumeric(txtAnioCumpleanios.getText()) && isNumeric(txtMesCumpleanios.getText()) && isNumeric(txtDiaCumpleanios.getText()))
+		{
+			int anio = txtAnioCumpleanios.getText().length() == 4 ? Integer.parseInt(txtAnioCumpleanios.getText()) : -1;
+			int mes = txtMesCumpleanios.getText().length() == 2 ?  Integer.parseInt(txtMesCumpleanios.getText()) : -1;
+			int dia = txtDiaCumpleanios.getText().length() == 2 ?  Integer.parseInt(txtDiaCumpleanios.getText()) : -1;;	
+			
+			if(anio > 0 && anio <= LocalDate.now().getYear() && mes > 0 && mes < 13 && dia > 0 && dia < 32)
+			{
+				return LocalDate.of(anio, mes, dia);
+			}
+			else
+			{
+				return LocalDate.of(1, 1, 1);
+			}			
+		}
+		else
+		{
+			return LocalDate.of(1, 1, 1);
+		}
 	}
 	
-	
+	public boolean isNumeric(String s) {  
+	    return s.matches("[-+]?\\d*\\.?\\d+");  
+	}
 }
 

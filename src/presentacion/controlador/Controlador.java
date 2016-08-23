@@ -3,11 +3,10 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 import dto.ContactoDTO;
@@ -147,6 +146,9 @@ public class Controlador implements ActionListener
 			{
 				
 				this.ventanaPersona = new VentanaPersona(this);
+				this.llenarDdlLocalidades();
+				this.llenarDdlContactos();
+				
 				int fila = this.vista.getTablaPersonas().getSelectedRow();
 				if(fila != -1){
 				JTable tabla =  this.vista.getTablaPersonas();
@@ -184,31 +186,38 @@ public class Controlador implements ActionListener
 			else if(e.getSource() == this.ventanaPersona.getBtnAgregarPersona())
 			{
 				int fila = this.vista.getTablaPersonas().getSelectedRow();
-				PersonaDTO nuevaPersona = new PersonaDTO(0,this.ventanaPersona.getTxtNombre().getText(), ventanaPersona.getTxtTelefono().getText(), 
-						ventanaPersona.getTxtDireccion().getText(), Integer.parseInt(ventanaPersona.getTxtNroCalle().getText()),
-						Integer.parseInt(ventanaPersona.getTxtNroPiso().getText()),
-						ventanaPersona.getTxtNroDpto().getText(), ventanaPersona.getLocalidad(),
-						ventanaPersona.getTxtMail().getText(), ventanaPersona.getTextFechaCumpleanios(), 
-						ventanaPersona.getTipoContacto());
-				if(fila != -1)
-				{
-					if(this.agenda.selectPersona(this.personas_en_tabla.get(fila)))
+				if(ejecurtarValidacioneVentanaPersona(this.ventanaPersona))
+				{					
+					PersonaDTO nuevaPersona = new PersonaDTO(0,this.ventanaPersona.getTxtNombre().getText(), ventanaPersona.getTxtTelefono().getText(), 
+							ventanaPersona.getTxtDireccion().getText(), Integer.parseInt(ventanaPersona.getTxtNroCalle().getText()),
+							Integer.parseInt(ventanaPersona.getTxtNroPiso().getText()),
+							ventanaPersona.getTxtNroDpto().getText(), ventanaPersona.getLocalidad(),
+							ventanaPersona.getTxtMail().getText(), ventanaPersona.getTextFechaCumpleanios(), 
+							ventanaPersona.getTipoContacto());
+					if(fila != -1)
 					{
-						nuevaPersona.setIdPersona(this.personas_en_tabla.get(fila).getIdPersona());
-						this.agenda.updatePersona(nuevaPersona);					
+						if(this.agenda.selectPersona(this.personas_en_tabla.get(fila)))
+						{
+							nuevaPersona.setIdPersona(this.personas_en_tabla.get(fila).getIdPersona());
+							this.agenda.updatePersona(nuevaPersona);					
+						}
+						else
+						{
+							this.agenda.agregarPersona(nuevaPersona);
+						}
 					}
 					else
 					{
 						this.agenda.agregarPersona(nuevaPersona);
 					}
+
+					this.llenarTabla();
+					this.ventanaPersona.dispose();
 				}
 				else
 				{
-					this.agenda.agregarPersona(nuevaPersona);
-				}
-				this.llenarTabla();
-				this.ventanaPersona.dispose();
-				
+					JOptionPane.showMessageDialog(null, "Los datos que esta pasando no son validos");
+				}				
 			}
 			//Funcionalidad botones Ventana Localidad
 			else if(this.ventanaPersona!= null && e.getSource() == this.ventanaPersona.getBtnAgregarEditarLocalidad())
@@ -220,18 +229,33 @@ public class Controlador implements ActionListener
 			{
 				LocalidadDTO newLocalidad = new LocalidadDTO();
 				newLocalidad.setDescripcion(this.ventanaLocalidad.getDescripcion().getText());
-				newLocalidad.setCodigoPostal(Integer.parseInt(this.ventanaLocalidad.getCodigoPostar().getText()));
-				this.localidad.insertLocalidad(newLocalidad);
-				this.ventanaLocalidad.limpiarTextBox();
-				this.llenarTablaLocalidades();
+				if(isNumeric(this.ventanaLocalidad.getCodigoPostar().getText()))
+				{
+					newLocalidad.setCodigoPostal(Integer.parseInt(this.ventanaLocalidad.getCodigoPostar().getText()));
+					this.localidad.insertLocalidad(newLocalidad);
+					this.ventanaLocalidad.limpiarTextBox();
+					this.llenarTablaLocalidades();
+				}
+				else 
+				{
+					JOptionPane.showMessageDialog(null, "Los datos que esta pasando no son validos");
+				}
+				
 			}
 			else if(this.ventanaLocalidad!= null && e.getSource() == this.ventanaLocalidad.getBtnEditar())
 			{
 				this.localidadSeleccionada.setDescripcion(this.ventanaLocalidad.getDescripcion().getText());
-				this.localidadSeleccionada.setCodigoPostal(Integer.parseInt(this.ventanaLocalidad.getCodigoPostar().getText()));
-				this.localidad.updateLocalidad(this.localidadSeleccionada);
-				this.ventanaLocalidad.limpiarTextBox();
-				this.llenarTablaLocalidades();
+				if(isNumeric(this.ventanaLocalidad.getCodigoPostar().getText()))
+				{
+					this.localidadSeleccionada.setCodigoPostal(Integer.parseInt(this.ventanaLocalidad.getCodigoPostar().getText()));
+					this.localidad.updateLocalidad(this.localidadSeleccionada);
+					this.ventanaLocalidad.limpiarTextBox();
+					this.llenarTablaLocalidades();
+				}
+				else 
+				{
+					JOptionPane.showMessageDialog(null, "Los datos que esta pasando no son validos");
+				}
 			}
 			else if(this.ventanaLocalidad!= null && e.getSource() == this.ventanaLocalidad.getBtnCargar())
 			{
@@ -283,4 +307,26 @@ public class Controlador implements ActionListener
 			}
 		}
 
+		private boolean ejecurtarValidacioneVentanaPersona(VentanaPersona ventana) {
+			
+			if(validarFecha(ventana.getTextFechaCumpleanios()) && isNumeric(ventana.getTxtNroCalle().getText()) 
+					&& isNumeric(ventana.getTxtNroPiso().getText()) && isNumeric(ventana.getTxtTelefono().getText()))
+			{
+				return true;
+			}
+						
+			return false;
+		}
+		
+		private boolean validarFecha(LocalDate textFechaCumpleanios) {
+			if(textFechaCumpleanios.getDayOfMonth() != 1 && textFechaCumpleanios.getMonthValue() != 1 && textFechaCumpleanios.getYear() != 1)
+			{
+				return true;
+			}
+			return false;
+		}
+
+		public boolean isNumeric(String s) {  
+		    return s.matches("[-+]?\\d*\\.?\\d+");  
+		}
 }
