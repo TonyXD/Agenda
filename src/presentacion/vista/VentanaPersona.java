@@ -2,6 +2,8 @@ package presentacion.vista;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -145,7 +147,6 @@ public class VentanaPersona extends JFrame
 		panel.add(lblTipoDeContacto);
 		
 		ddlTipoContacto = new JComboBox<String>();
-		ddlTipoContacto.setModel(new DefaultComboBoxModel<String>(new String[] {"- Seleccione -", "Amigo", "Trabajo", "Familia", "Otros"}));
 		ddlTipoContacto.setBounds(350, 69, 130, 20);
 		panel.add(ddlTipoContacto);
 		
@@ -248,8 +249,15 @@ public class VentanaPersona extends JFrame
 		return ddlTipoContacto.getSelectedItem().toString();
 	}
 
-	public void setComboBox(String[] list) {
-	    model = new DefaultComboBoxModel<String>(list);
+	public void setComboBoxLocalidad(List<String> list) {
+		String[] comboBoxModel = list.toArray(new String[0]);
+	    model = new DefaultComboBoxModel<String>(comboBoxModel);
+	    ddlLocalidad.setModel(model);
+	}
+	
+	public void setComboBoxContacto(List<String> list) {
+		String[] comboBoxModel = list.toArray(new String[0]);
+	    model = new DefaultComboBoxModel<String>(comboBoxModel);
 	    ddlTipoContacto.setModel(model);
 	}
 	

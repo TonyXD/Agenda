@@ -14,17 +14,17 @@ private ContactoDAO contacto;
 		this.contacto = new ContactoDAO();
 	}
 	
-	public List<ContactoDTO> BuscarLocalidades()
+	public List<ContactoDTO> BuscarContactos()
 	{
 		return contacto.readAll();		
 	}
 	
-	public void insertLocalidad(ContactoDTO agregarContacto)
+	public void insertContacto(ContactoDTO agregarContacto)
 	{
 		contacto.insert(agregarContacto);
 	}
 	
-	public void updateLocalidad(ContactoDTO editarContacto) {
+	public void updateContacto(ContactoDTO editarContacto) {
 		contacto.update(editarContacto);
 	}
 }

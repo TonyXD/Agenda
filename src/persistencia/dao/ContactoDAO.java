@@ -14,7 +14,7 @@ public class ContactoDAO
 
 	private static final String selectAll = "SELECT * FROM contacto";
 	private static final String insert = "INSERT INTO contacto(Descripcion) VALUES(?)";
-	private static final String update = "UPDATE contacto SET Descripcion= ? WHERE idLocalidad= ?";
+	private static final String update = "UPDATE contacto SET Descripcion= ? WHERE idContacto= ?";
 	private static final Conexion conexion = Conexion.getConexion();
 	
 	public List<ContactoDTO> readAll() {
@@ -28,7 +28,7 @@ public class ContactoDAO
 			
 			while(resultSet.next())
 			{
-				contacto.add(new ContactoDTO(resultSet.getInt("idLocalidad"), resultSet.getString("Descripcion")));
+				contacto.add(new ContactoDTO(resultSet.getInt("idContacto"), resultSet.getString("Descripcion")));
 			}
 		} 
 		catch (SQLException e) 

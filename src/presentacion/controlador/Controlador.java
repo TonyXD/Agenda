@@ -3,7 +3,10 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.swing.JTable;
 
@@ -38,7 +41,7 @@ public class Controlador implements ActionListener
 		private Contacto contacto;
 		private ContactoDTO contactoSeleccionada;
 		
-		public Controlador(Vista vista, Agenda agenda, Localidad localidad)
+		public Controlador(Vista vista, Agenda agenda, Localidad localidad, Contacto contacto)
 		{
 			this.vista = vista;
 			this.vista.getBtnAgregar().addActionListener(this);
@@ -50,6 +53,9 @@ public class Controlador implements ActionListener
 			
 			this.localidad = localidad;
 			this.ListaDeLocalidades = null;			
+			
+			this.contacto = contacto;
+			this.ListaDeContactos = null;	
 		}
 		
 		public void inicializar()
@@ -77,17 +83,20 @@ public class Controlador implements ActionListener
 		
 		private void llenarDdlLocalidades()
 		{
-//			this.ListaDeLocalidades = localidad.BuscarLocalidades();
-//
-//			String[] array = new String[this.ListaDeLocalidades.size()];
-//			
-//			for (int i = 0; i < this.ListaDeLocalidades.size(); i ++)
-//			{
-//				array[i] = this.ListaDeLocalidades.get(i).getDescripcion();
-//			}
-//			
-//			this.ventanaPersona.setComboBox(array);
+			this.ListaDeLocalidades = localidad.BuscarLocalidades();
+			
+			List<String> DescripcionesList = ListaDeLocalidades.stream().map(x -> x.getDescripcion()).collect(Collectors.toList()); 
+			this.ventanaPersona.setComboBoxLocalidad(DescripcionesList);
 		}
+		
+		private void llenarDdlContactos()
+		{
+			this.ListaDeContactos = contacto.BuscarContactos();
+			
+			List<String> DescripcionesList = ListaDeContactos.stream().map(x -> x.getDescripcion()).collect(Collectors.toList()); 
+			this.ventanaPersona.setComboBoxContacto(DescripcionesList);
+		}
+
 
 		private void llenarTablaLocalidades()
 		{
@@ -108,12 +117,31 @@ public class Controlador implements ActionListener
 			
 		}
 		
+		private void llenarTablaContacto()
+		{
+			this.ventanaContacto.getTablaModel().setRowCount(0);
+			this.ventanaContacto.getTablaModel().setColumnCount(0);
+			this.ventanaContacto.getTablaModel().setColumnIdentifiers(this.ventanaContacto.getNombreColumnas());
+			
+			this.ListaDeContactos = contacto.BuscarContactos();
+			if(this.ListaDeContactos != null)
+			{				
+				for (int i = 0; i < this.ListaDeContactos.size(); i ++)
+				{
+					Object[] fila = {this.ListaDeContactos.get(i).getIdContacto(), this.ListaDeContactos.get(i).getDescripcion()};
+					this.ventanaContacto.getTablaModel().addRow(fila);
+				}	
+			}
+			
+		}
+		
 		public void actionPerformed(ActionEvent e) 
 		{
 			if(e.getSource() == this.vista.getBtnAgregar())
 			{
-				this.llenarDdlLocalidades();
 				this.ventanaPersona = new VentanaPersona(this);
+				this.llenarDdlLocalidades();
+				this.llenarDdlContactos();
 			}
 			else if(e.getSource() == this.vista.getBtnEditar())
 			{
@@ -183,12 +211,12 @@ public class Controlador implements ActionListener
 				
 			}
 			//Funcionalidad botones Ventana Localidad
-			else if(e.getSource() == this.ventanaPersona.getBtnAgregarEditarLocalidad())
+			else if(this.ventanaPersona!= null && e.getSource() == this.ventanaPersona.getBtnAgregarEditarLocalidad())
 			{
 				this.ventanaLocalidad = new VentanaLocalidad(this);
 				this.llenarTablaLocalidades();
 			}
-			else if(e.getSource() == this.ventanaLocalidad.getBtnAgregar())
+			else if(this.ventanaLocalidad!= null && e.getSource() == this.ventanaLocalidad.getBtnAgregar())
 			{
 				LocalidadDTO newLocalidad = new LocalidadDTO();
 				newLocalidad.setDescripcion(this.ventanaLocalidad.getDescripcion().getText());
@@ -197,7 +225,7 @@ public class Controlador implements ActionListener
 				this.ventanaLocalidad.limpiarTextBox();
 				this.llenarTablaLocalidades();
 			}
-			else if(e.getSource() == this.ventanaLocalidad.getBtnEditar())
+			else if(this.ventanaLocalidad!= null && e.getSource() == this.ventanaLocalidad.getBtnEditar())
 			{
 				this.localidadSeleccionada.setDescripcion(this.ventanaLocalidad.getDescripcion().getText());
 				this.localidadSeleccionada.setCodigoPostal(Integer.parseInt(this.ventanaLocalidad.getCodigoPostar().getText()));
@@ -205,7 +233,7 @@ public class Controlador implements ActionListener
 				this.ventanaLocalidad.limpiarTextBox();
 				this.llenarTablaLocalidades();
 			}
-			else if(e.getSource() == this.ventanaLocalidad.getBtnCargar())
+			else if(this.ventanaLocalidad!= null && e.getSource() == this.ventanaLocalidad.getBtnCargar())
 			{
 				int fila = this.ventanaLocalidad.getTablaLocalidades().getSelectedRow();
 				if(fila != -1){
@@ -220,27 +248,27 @@ public class Controlador implements ActionListener
 				}				
 			}
 			//Funcionalidad botones Ventana Contacto
-			else if(e.getSource() == this.ventanaPersona.getBtnAgregarEditarContacto())
+			else if(this.ventanaPersona!= null && e.getSource() == this.ventanaPersona.getBtnAgregarEditarContacto())
 			{
 				this.ventanaContacto = new ventanaContacto(this);
-//				this.llenarTablaLocalidades();
+				this.llenarTablaContacto();
 			}
-			else if(e.getSource() == this.ventanaContacto.getBtnAgregar())
+			else if(this.ventanaContacto!= null && e.getSource() == this.ventanaContacto.getBtnAgregar())
 			{
 				ContactoDTO newContacto = new ContactoDTO();
 				newContacto.setDescripcion(this.ventanaContacto.getDescripcion().getText());
-				this.contacto.insertLocalidad(newContacto);
+				this.contacto.insertContacto(newContacto);
 				this.ventanaContacto.limpiarTextBox();
-				//this.llenarTablaLocalidades();
+				this.llenarTablaContacto();
 			}
-			else if(e.getSource() == this.ventanaContacto.getBtnEditar())
+			else if(this.ventanaContacto!= null && e.getSource() == this.ventanaContacto.getBtnEditar())
 			{
 				this.contactoSeleccionada.setDescripcion(this.ventanaContacto.getDescripcion().getText());
-				this.contacto.updateLocalidad(this.contactoSeleccionada);
+				this.contacto.updateContacto(this.contactoSeleccionada);
 				this.ventanaContacto.limpiarTextBox();
-//				this.llenarTablaLocalidades();
+				this.llenarTablaContacto();
 			}
-			else if(e.getSource() == this.ventanaContacto.getBtnCargar())
+			else if(this.ventanaContacto!= null && e.getSource() == this.ventanaContacto.getBtnCargar())
 			{
 				int fila = this.ventanaContacto.getTablaLocalidades().getSelectedRow();
 				if(fila != -1){
