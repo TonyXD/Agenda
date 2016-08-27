@@ -73,7 +73,7 @@ public class Controlador implements ActionListener
 			{
 				Object[] fila = {this.personas_en_tabla.get(i).getNombre(), this.personas_en_tabla.get(i).getTelefono(),
 						this.personas_en_tabla.get(i).getDomicilio(), this.personas_en_tabla.get(i).getNroCalle(),
-						this.personas_en_tabla.get(i).getNroPiso(), this.personas_en_tabla.get(i).getNroDpto(), this.personas_en_tabla.get(i).getLocalidad(),
+						this.personas_en_tabla.get(i).getNroPiso(), this.personas_en_tabla.get(i).getNroDpto(), this.personas_en_tabla.get(i).getDescripcionLocalidad(),
 						this.personas_en_tabla.get(i).getMail(), this.personas_en_tabla.get(i).getFechaCumpleanios(), this.personas_en_tabla.get(i).getTipoContacto()};
 				this.vista.getModelPersonas().addRow(fila);
 			}

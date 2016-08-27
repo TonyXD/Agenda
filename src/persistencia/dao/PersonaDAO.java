@@ -15,7 +15,7 @@ public class PersonaDAO
 {
 	private static final String insert = "INSERT INTO personas(idPersona, nombre, telefono, direccion, NroCalle, NroPiso, NroDpto, Localidad, DirEmail, FechaCumpleaños, TipoContacto) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM personas WHERE idPersona = ?";
-	private static final String readall = "SELECT * FROM personas";
+	private static final String readall = "SELECT P.idPersona, P.Nombre, P.Telefono, P.Direccion, P.NroCalle, P.NroPiso, P.NroDpto, P.DirEmail, P.FechaCumpleaños, L.idLocalidad, L.Descripcion as DescripcionLocalidad, L.CodigoPostal,C.idContacto, C.Descripcion as DescripcionContacto FROM personas as P join localidad as L join contacto as C where P.IdLocalidad = L.idLocalidad  AND P.IdContacto = C.idContacto";
 	private static final String update = "UPDATE agenda.personas SET Nombre= ?, Telefono= ?, Direccion= ?, NroCalle= ?, NroPiso= ?, NroDpto= ?, Localidad= ?, DirEmail= ?, FechaCumpleaños= ?, TipoContacto= ? WHERE idPersona= ?";
 	private static final String selectById = "SELECT * FROM personas WHERE idPersona = ?";
 	private static final Conexion conexion = Conexion.getConexion();
@@ -34,7 +34,7 @@ public class PersonaDAO
 			statement.setInt(5, persona.getNroCalle());
 			statement.setInt(6, persona.getNroPiso());
 			statement.setString(7, persona.getNroDpto());
-			statement.setString(8, persona.getLocalidad());
+			statement.setString(8, persona.getDescripcionLocalidad());
 			statement.setString(9, persona.getMail());
 			statement.setDate(10, Date.valueOf(persona.getFechaCumpleanios()));
 			statement.setString(11, persona.getTipoContacto());
@@ -114,8 +114,8 @@ public class PersonaDAO
 				
 				personas.add(new PersonaDTO(resultSet.getInt("idPersona"), resultSet.getString("Nombre"), resultSet.getString("Telefono"), 
 						resultSet.getString("Direccion"), resultSet.getInt("NroCalle"), resultSet.getInt("NroPiso"),
-						resultSet.getString("NroDpto"), resultSet.getString("Localidad"), resultSet.getString("DirEmail"),
-						date, resultSet.getString("TipoContacto")));
+						resultSet.getString("NroDpto"), resultSet.getString("DescripcionLocalidad"), resultSet.getString("DirEmail"),
+						date, resultSet.getString("DescripcionContacto")));
 			}
 		} 
 		catch (SQLException e) 
@@ -142,7 +142,7 @@ public class PersonaDAO
 			statement.setInt(4, persona.getNroCalle());
 			statement.setInt(5, persona.getNroPiso());
 			statement.setString(6, persona.getNroDpto());
-			statement.setString(7, persona.getLocalidad());
+			statement.setString(7, persona.getDescripcionLocalidad());
 			statement.setString(8, persona.getMail());
 			statement.setDate(9, Date.valueOf(persona.getFechaCumpleanios()));
 			statement.setString(10, persona.getTipoContacto());

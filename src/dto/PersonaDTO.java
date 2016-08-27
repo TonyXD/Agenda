@@ -10,7 +10,7 @@ public class PersonaDTO
 	private int NroCalle;
 	private int NroPiso;
 	private String NroDpto;
-	private String Localidad;
+	private String DescripcionLocalidad;
 	private String EMail;
 	private LocalDate FechaCumpleanios;
 	private String TipoContacto;
@@ -28,7 +28,7 @@ public class PersonaDTO
 		this.NroPiso = nroPiso;
 		this.EMail = mail;		
 		this.FechaCumpleanios = fechaCumpleanios;
-		this.Localidad = localidad;
+		this.DescripcionLocalidad = localidad;
 		
 		this.TipoContacto = tipoContacto;		
 	}
@@ -69,9 +69,9 @@ public class PersonaDTO
 		return this.NroDpto;
 	}
 
-	public String getLocalidad() 
+	public String getDescripcionLocalidad() 
 	{
-		return this.Localidad;
+		return this.DescripcionLocalidad;
 	}
 	
 	public String getTipoContacto() 
@@ -124,9 +124,9 @@ public class PersonaDTO
 		this.NroDpto = nroDpto;
 	}
 
-	public void setLocalidad(String localidad) 
+	public void setDescripcionLocalidad(String localidad) 
 	{
-		this.Localidad = localidad;
+		this.DescripcionLocalidad = localidad;
 	}
 	
 	public void setTipoContacto(String tipoContacto) 
