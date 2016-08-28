@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.ContactoDTO;
-import dto.LocalidadDTO;
 import persistencia.conexion.Conexion;
 
 public class ContactoDAO

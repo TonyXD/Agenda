@@ -285,6 +285,25 @@ public class Controlador implements ActionListener
 				this.ventanaLocalidad.cargarTextBox(localidadSeleccionada);					
 				}				
 			}
+			else if(e.getSource() == this.ventanaLocalidad.getBtnEliminar())
+			{
+				int filas_seleccionadas = this.ventanaLocalidad.getTablaLocalidades().getSelectedRow();
+				JTable tabla = this.ventanaLocalidad.getTablaLocalidades();
+				if (filas_seleccionadas != -1)
+				{
+					if(this.localidad.findIfLocalidadIsAssing((int)tabla.getValueAt(filas_seleccionadas, 0)))
+					{
+						JOptionPane.showMessageDialog(null, "La localidad que intenta eliminar esta asignada a una o mas personas. Antes de elimanarla debe re-asiganr la localidad en las personas afectadas.");
+					}
+					else
+					{
+						this.localidad.borrarLocalidad(this.ListaDeLocalidades.get(filas_seleccionadas));
+						this.llenarDdlLocalidades();
+						this.llenarTablaLocalidades();
+					}
+				}
+				
+			}
 			//Funcionalidad botones Ventana Contacto
 			else if(this.ventanaPersona!= null && e.getSource() == this.ventanaPersona.getBtnAgregarEditarContacto())
 			{

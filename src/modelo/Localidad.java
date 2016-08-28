@@ -34,4 +34,13 @@ public class Localidad {
 		int idLocalidad = this.localidad.findByDescrip(localidad).getIdLocalidad() ;
 		return idLocalidad;
 	}
+
+	public boolean findIfLocalidadIsAssing(int localidad) {
+		
+		return this.localidad.findIfLocalidadIsAssing(localidad);
+	}
+
+	public void borrarLocalidad(LocalidadDTO localidadDTO) {
+		this.localidad.borrarLocalidad(localidadDTO);
+	}
 }

@@ -28,6 +28,7 @@ public class VentanaLocalidad extends JFrame
 	private JButton btnAgregar;
 	private JButton btnEditar;
 	private JButton btnCargar;
+	private JButton btnEliminar;
 
 	//TABLA
 	private JTable tbl_Localidades;
@@ -69,7 +70,7 @@ public class VentanaLocalidad extends JFrame
 		scrollBarLocalidad.setViewportView(tbl_Localidades);
 		
 		btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(373, 528, 89, 23);
+		btnAgregar.setBounds(175, 528, 89, 23);
 		btnAgregar.addActionListener(this.Controlador);
 		getContentPane().setLayout(null);
 		getContentPane().add(btnAgregar);
@@ -130,6 +131,11 @@ public class VentanaLocalidad extends JFrame
 		getContentPane().setLayout(null);
 		getContentPane().add(btnCargar);
 		
+		btnEliminar = new JButton("Eliminar");
+		btnEliminar.setBounds(373, 528, 89, 23);
+		btnEliminar.addActionListener(this.Controlador);
+		getContentPane().add(btnEliminar);
+		
 		this.setVisible(true);
 	}
 
@@ -156,6 +162,10 @@ public class VentanaLocalidad extends JFrame
 	public JButton getBtnCargar()
 	{
 		return this.btnCargar;
+	}
+	public JButton getBtnEliminar()
+	{
+		return this.btnEliminar;
 	}
 	public JTextField getDescripcion()
 	{
