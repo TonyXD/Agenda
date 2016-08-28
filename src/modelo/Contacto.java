@@ -28,9 +28,19 @@ private ContactoDAO contacto;
 		contacto.update(editarContacto);
 	}
 
+	public void borrarContacto(ContactoDTO contacto) {
+		this.contacto.borrarContacto(contacto);
+	}
+
+	
 	public int findIdContactoByDescrip(String tipoContacto) {
 		
 		int IdContacto = this.contacto.findIdContactoByDescrip(tipoContacto).getIdContacto();		
 		return IdContacto;
+	}
+	
+	public boolean findIfLocalidadIsAssing(int tipoContacto) {
+		
+		return this.contacto.findIfLocalidadIsAssing(tipoContacto);
 	}
 }

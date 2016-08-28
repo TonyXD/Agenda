@@ -16,6 +16,8 @@ public class ContactoDAO
 	private static final String insert = "INSERT INTO contacto(Descripcion) VALUES(?)";
 	private static final String update = "UPDATE contacto SET Descripcion= ? WHERE idContacto= ?";
 	private static final String findByDescrip = "SELECT C.idContacto, C.Descripcion FROM contacto as C WHERE Descripcion = ?";
+	private static final String findById = "SELECT * From contacto as C  join personas as P where P.IdContacto = ?";
+	private static final String delete = "DELETE FROM contacto WHERE idContacto = ?";
 	private static final Conexion conexion = Conexion.getConexion();
 	
 	public List<ContactoDTO> readAll() {
@@ -113,5 +115,55 @@ public class ContactoDAO
 		}
 		return contacto;
 	}
+
+	public boolean findIfLocalidadIsAssing(int idContacto) {
+		PreparedStatement statement;
+		ResultSet resultSet; 
+		try 
+		{
+			statement = conexion.getSQLConexion().prepareStatement(findById);			
+			statement.setInt(1, idContacto);
+			resultSet = statement.executeQuery();
+			
+			if(resultSet.next())
+			{
+				return true;
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			conexion.cerrarConexion();
+		}
+		
+		return false;
+	}
+	
+	public boolean borrarContacto(ContactoDTO contacto) {
+
+		PreparedStatement statement;
+		int chequeoUpdate=0;
+		try 
+		{
+			statement = conexion.getSQLConexion().prepareStatement(delete);
+			statement.setString(1, Integer.toString(contacto.getIdContacto()));
+			chequeoUpdate = statement.executeUpdate();
+			if(chequeoUpdate > 0) //Si se ejecut� devuelvo true
+				return true;
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		finally //Se ejecuta siempre
+		{
+			conexion.cerrarConexion();
+		}
+		return false;
+	}
+	
 
 }

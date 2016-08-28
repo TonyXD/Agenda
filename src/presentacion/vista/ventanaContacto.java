@@ -26,6 +26,7 @@ public class ventanaContacto  extends JFrame
 	private JButton btnAgregar;
 	private JButton btnEditar;
 	private JButton btnCargar;
+	private JButton btnEliminar;
 
 	//TABLA
 	private JTable tbl_Contacto;
@@ -63,7 +64,7 @@ public class ventanaContacto  extends JFrame
 		scrollBarContacto.setViewportView(tbl_Contacto);
 		
 		btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(373, 528, 89, 23);
+		btnAgregar.setBounds(175, 528, 89, 23);
 		btnAgregar.addActionListener(this.Controlador);
 		getContentPane().setLayout(null);
 		getContentPane().add(btnAgregar);
@@ -114,6 +115,11 @@ public class ventanaContacto  extends JFrame
 		getContentPane().setLayout(null);
 		getContentPane().add(btnCargar);
 		
+		btnEliminar = new JButton("Eliminar");
+		btnEliminar.setBounds(373, 528, 89, 23);
+		btnEliminar.addActionListener(this.Controlador);
+		getContentPane().add(btnEliminar);
+		
 		this.setVisible(true);
 	}
 	
@@ -138,6 +144,10 @@ public class ventanaContacto  extends JFrame
 	public JButton getBtnCargar()
 	{
 		return this.btnCargar;
+	}
+	public JButton getBtnEliminar()
+	{
+		return this.btnEliminar;
 	}
 	public JTextField getDescripcion()
 	{

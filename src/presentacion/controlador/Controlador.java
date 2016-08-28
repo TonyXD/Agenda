@@ -285,7 +285,7 @@ public class Controlador implements ActionListener
 				this.ventanaLocalidad.cargarTextBox(localidadSeleccionada);					
 				}				
 			}
-			else if(e.getSource() == this.ventanaLocalidad.getBtnEliminar())
+			else if(this.ventanaLocalidad!= null && e.getSource() == this.ventanaLocalidad.getBtnEliminar())
 			{
 				int filas_seleccionadas = this.ventanaLocalidad.getTablaLocalidades().getSelectedRow();
 				JTable tabla = this.ventanaLocalidad.getTablaLocalidades();
@@ -362,6 +362,25 @@ public class Controlador implements ActionListener
 				
 				this.ventanaContacto.cargarTextBox(contactoSeleccionada);					
 				}				
+			}
+			else if(this.ventanaContacto!= null && e.getSource() == this.ventanaContacto.getBtnEliminar())
+			{
+				int filas_seleccionadas = this.ventanaContacto.getTablaLocalidades().getSelectedRow();
+				JTable tabla = this.ventanaContacto.getTablaLocalidades();
+				if (filas_seleccionadas != -1)
+				{
+					if(this.contacto.findIfLocalidadIsAssing((int)tabla.getValueAt(filas_seleccionadas, 0)))
+					{
+						JOptionPane.showMessageDialog(null, "El contacto que intenta eliminar esta asignada a una o mas personas. Antes de elimanarla debe re-asiganr el contacto en las personas afectadas.");
+					}
+					else
+					{
+						this.contacto.borrarContacto(this.ListaDeContactos.get(filas_seleccionadas));
+						this.llenarDdlContactos();
+						this.llenarTablaContacto();
+					}
+				}
+				
 			}
 		}
 
