@@ -13,7 +13,7 @@ import persistencia.conexion.Conexion;
 
 public class PersonaDAO 
 {
-	private static final String insert = "INSERT INTO personas(idPersona, nombre, telefono, direccion, NroCalle, NroPiso, NroDpto, Localidad, DirEmail, FechaCumpleaños, TipoContacto) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String insert = "INSERT INTO personas(idPersona, nombre, telefono, direccion, NroCalle, NroPiso, NroDpto, idLocalidad, DirEmail, FechaCumpleaños, idContacto) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM personas WHERE idPersona = ?";
 	private static final String readall = "SELECT P.idPersona, P.Nombre, P.Telefono, P.Direccion, P.NroCalle, P.NroPiso, P.NroDpto, P.DirEmail, P.FechaCumpleaños, L.idLocalidad, L.Descripcion as DescripcionLocalidad, L.CodigoPostal,C.idContacto, C.Descripcion as DescripcionContacto FROM personas as P join localidad as L join contacto as C where P.IdLocalidad = L.idLocalidad  AND P.IdContacto = C.idContacto";
 	private static final String update = "UPDATE agenda.personas SET Nombre= ?, Telefono= ?, Direccion= ?, NroCalle= ?, NroPiso= ?, NroDpto= ?, idLocalidad= ?, DirEmail= ?, FechaCumpleaños= ?, idContacto= ? WHERE idPersona= ?";
