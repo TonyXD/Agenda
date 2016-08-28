@@ -10,14 +10,16 @@ public class PersonaDTO
 	private int NroCalle;
 	private int NroPiso;
 	private String NroDpto;
+	private int IdLocalidad;
 	private String DescripcionLocalidad;
 	private String EMail;
 	private LocalDate FechaCumpleanios;
-	private String TipoContacto;
+	private int IdContacto;
+	private String DescripcionContacto;
 
 	public PersonaDTO(int idPersona, String nombre, String telefono, String domicilio, 
-			int nroCalle, int nroPiso, String nroDpto, String localidad,
-			String mail, LocalDate fechaCumpleanios, String tipoContacto)
+			int nroCalle, int nroPiso, String nroDpto, int idLocalidad, String localidad,
+			String mail, LocalDate fechaCumpleanios,int idContacto, String tipoContacto)
 	{
 		this.idPersona = idPersona;
 		this.nombre = nombre;
@@ -28,9 +30,10 @@ public class PersonaDTO
 		this.NroPiso = nroPiso;
 		this.EMail = mail;		
 		this.FechaCumpleanios = fechaCumpleanios;
+		this.IdLocalidad = idLocalidad;
 		this.DescripcionLocalidad = localidad;
-		
-		this.TipoContacto = tipoContacto;		
+		this.IdContacto = idContacto;
+		this.DescripcionContacto = tipoContacto;		
 	}
 	
 	//Geters
@@ -74,9 +77,9 @@ public class PersonaDTO
 		return this.DescripcionLocalidad;
 	}
 	
-	public String getTipoContacto() 
+	public String getDescripcionContacto() 
 	{
-		return this.TipoContacto;
+		return this.DescripcionContacto;
 	}
 
 	public String getMail() {
@@ -85,6 +88,14 @@ public class PersonaDTO
 	
 	public LocalDate getFechaCumpleanios() {
 		return this.FechaCumpleanios;
+	}
+
+	public int getIdContacto() {
+		return this.IdContacto;
+	}
+
+	public int getIdLocalidad() {
+		return this.IdLocalidad;
 	}
 
 	//Seters
@@ -129,9 +140,9 @@ public class PersonaDTO
 		this.DescripcionLocalidad = localidad;
 	}
 	
-	public void setTipoContacto(String tipoContacto) 
+	public void setDescripcionContacto(String tipoContacto) 
 	{
-		this.TipoContacto = tipoContacto;
+		this.DescripcionContacto = tipoContacto;
 	}
 
 	public void setFechaCumpleaneos(LocalDate fechaCumpleanios) {
@@ -140,6 +151,14 @@ public class PersonaDTO
 	
 	public void setEMail(String eMail) {
 		this.EMail = eMail;
+	}
+
+	public void setIdContacto(int idContacto) {
+		this.IdContacto = idContacto;
+	}
+
+	public void setIdLocalidad(int idLocalidad) {
+		this.IdLocalidad = idLocalidad;
 	}
 	
 	

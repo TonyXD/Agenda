@@ -284,10 +284,10 @@ public class VentanaPersona extends JFrame
 		if(isNumeric(txtAnioCumpleanios.getText()) && isNumeric(txtMesCumpleanios.getText()) && isNumeric(txtDiaCumpleanios.getText()))
 		{
 			int anio = txtAnioCumpleanios.getText().length() == 4 ? Integer.parseInt(txtAnioCumpleanios.getText()) : -1;
-			int mes = txtMesCumpleanios.getText().length() == 2 ?  Integer.parseInt(txtMesCumpleanios.getText()) : -1;
-			int dia = txtDiaCumpleanios.getText().length() == 2 ?  Integer.parseInt(txtDiaCumpleanios.getText()) : -1;;	
+			int mes = txtMesCumpleanios.getText().length() >= 1 ?  Integer.parseInt(txtMesCumpleanios.getText()) : -1;
+			int dia = txtDiaCumpleanios.getText().length() >= 1 ?  Integer.parseInt(txtDiaCumpleanios.getText()) : -1;;	
 			
-			if(anio > 0 && anio <= LocalDate.now().getYear() && mes > 0 && mes < 13 && dia > 0 && dia < 32)
+			if(anio > 1900 && anio <= LocalDate.now().getYear() && mes > 0 && mes < 13 && dia > 0 && dia < 32)
 			{
 				return LocalDate.of(anio, mes, dia);
 			}

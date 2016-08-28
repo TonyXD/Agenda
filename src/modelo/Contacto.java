@@ -27,4 +27,10 @@ private ContactoDAO contacto;
 	public void updateContacto(ContactoDTO editarContacto) {
 		contacto.update(editarContacto);
 	}
+
+	public int findIdContactoByDescrip(String tipoContacto) {
+		
+		int IdContacto = this.contacto.findIdContactoByDescrip(tipoContacto).getIdContacto();		
+		return IdContacto;
+	}
 }

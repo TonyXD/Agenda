@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.ContactoDTO;
+import dto.LocalidadDTO;
 import persistencia.conexion.Conexion;
 
 public class ContactoDAO
@@ -15,6 +16,7 @@ public class ContactoDAO
 	private static final String selectAll = "SELECT * FROM contacto";
 	private static final String insert = "INSERT INTO contacto(Descripcion) VALUES(?)";
 	private static final String update = "UPDATE contacto SET Descripcion= ? WHERE idContacto= ?";
+	private static final String findByDescrip = "SELECT C.idContacto, C.Descripcion FROM contacto as C WHERE Descripcion = ?";
 	private static final Conexion conexion = Conexion.getConexion();
 	
 	public List<ContactoDTO> readAll() {
@@ -84,6 +86,33 @@ public class ContactoDAO
 		}
 		return false;
 		
+	}
+	
+	public ContactoDTO findIdContactoByDescrip(String tipoContacto) {
+		
+		PreparedStatement statement;
+		ResultSet resultSet; 
+		ContactoDTO contacto = null;
+		try 
+		{
+			statement = conexion.getSQLConexion().prepareStatement(findByDescrip);			
+			statement.setString(1, tipoContacto);
+			resultSet = statement.executeQuery();
+			
+			if(resultSet.next())
+			{
+				contacto = new ContactoDTO(resultSet.getInt("idContacto"), resultSet.getString("Descripcion"));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			conexion.cerrarConexion();
+		}
+		return contacto;
 	}
 
 }

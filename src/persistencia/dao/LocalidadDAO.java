@@ -15,7 +15,7 @@ public class LocalidadDAO {
 	private static final String selectAll = "SELECT * FROM localidad";
 	private static final String insert = "INSERT INTO localidad(Descripcion, CodigoPostal) VALUES(?, ?)";
 	private static final String update = "UPDATE localidad SET Descripcion= ?, CodigoPostal= ? WHERE idLocalidad= ?";
-	
+	private static final String findByDescrip = "SELECT L.idLocalidad, L.Descripcion, L.CodigoPostal FROM localidad as L WHERE Descripcion = ?";
 	private static final Conexion conexion = Conexion.getConexion();
 	
 	
@@ -89,6 +89,34 @@ public class LocalidadDAO {
 			conexion.cerrarConexion();
 		}
 		return false;
+		
+	}
+
+	public LocalidadDTO findByDescrip(String localidad) {
+		
+		PreparedStatement statement;
+		ResultSet resultSet; 
+		LocalidadDTO newLocalidad = null;
+		try 
+		{
+			statement = conexion.getSQLConexion().prepareStatement(findByDescrip);			
+			statement.setString(1, localidad);
+			resultSet = statement.executeQuery();
+			
+			if(resultSet.next())
+			{
+				newLocalidad = new LocalidadDTO(resultSet.getInt("idLocalidad"), resultSet.getString("Descripcion"), resultSet.getInt("CodigoPostal"));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			conexion.cerrarConexion();
+		}
+		return newLocalidad;
 		
 	}
 }

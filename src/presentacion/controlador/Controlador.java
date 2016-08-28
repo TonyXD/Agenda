@@ -74,7 +74,7 @@ public class Controlador implements ActionListener
 				Object[] fila = {this.personas_en_tabla.get(i).getNombre(), this.personas_en_tabla.get(i).getTelefono(),
 						this.personas_en_tabla.get(i).getDomicilio(), this.personas_en_tabla.get(i).getNroCalle(),
 						this.personas_en_tabla.get(i).getNroPiso(), this.personas_en_tabla.get(i).getNroDpto(), this.personas_en_tabla.get(i).getDescripcionLocalidad(),
-						this.personas_en_tabla.get(i).getMail(), this.personas_en_tabla.get(i).getFechaCumpleanios(), this.personas_en_tabla.get(i).getTipoContacto()};
+						this.personas_en_tabla.get(i).getMail(), this.personas_en_tabla.get(i).getFechaCumpleanios(), this.personas_en_tabla.get(i).getDescripcionContacto()};
 				this.vista.getModelPersonas().addRow(fila);
 			}
 			this.vista.show();
@@ -188,11 +188,15 @@ public class Controlador implements ActionListener
 				int fila = this.vista.getTablaPersonas().getSelectedRow();
 				if(ejecurtarValidacioneVentanaPersona(this.ventanaPersona))
 				{					
+					//TODO GET ID LOCALIDAD Y CONTACTO DE BD
+					int idLocalidad = this.localidad.findIdLocalidadByDescrip(this.ventanaPersona.getLocalidad());
+					int idContacto = this.contacto.findIdContactoByDescrip(this.ventanaPersona.getTipoContacto());
+					
 					PersonaDTO nuevaPersona = new PersonaDTO(0,this.ventanaPersona.getTxtNombre().getText(), ventanaPersona.getTxtTelefono().getText(), 
 							ventanaPersona.getTxtDireccion().getText(), Integer.parseInt(ventanaPersona.getTxtNroCalle().getText()),
 							Integer.parseInt(ventanaPersona.getTxtNroPiso().getText()),
-							ventanaPersona.getTxtNroDpto().getText(), ventanaPersona.getLocalidad(),
-							ventanaPersona.getTxtMail().getText(), ventanaPersona.getTextFechaCumpleanios(), 
+							ventanaPersona.getTxtNroDpto().getText(), idLocalidad, ventanaPersona.getLocalidad(),
+							ventanaPersona.getTxtMail().getText(), ventanaPersona.getTextFechaCumpleanios(), idContacto, 
 							ventanaPersona.getTipoContacto());
 					if(fila != -1)
 					{
@@ -235,6 +239,7 @@ public class Controlador implements ActionListener
 					this.localidad.insertLocalidad(newLocalidad);
 					this.ventanaLocalidad.limpiarTextBox();
 					this.llenarTablaLocalidades();
+					this.llenarDdlLocalidades();
 				}
 				else 
 				{
@@ -253,6 +258,7 @@ public class Controlador implements ActionListener
 						this.localidad.updateLocalidad(this.localidadSeleccionada);
 						this.ventanaLocalidad.limpiarTextBox();
 						this.llenarTablaLocalidades();
+						this.llenarDdlLocalidades();
 					}
 					else 
 					{
@@ -294,6 +300,7 @@ public class Controlador implements ActionListener
 					this.contacto.insertContacto(newContacto);
 					this.ventanaContacto.limpiarTextBox();
 					this.llenarTablaContacto();
+					this.llenarDdlContactos();
 				}
 				else 
 				{
@@ -310,6 +317,7 @@ public class Controlador implements ActionListener
 						this.contacto.updateContacto(this.contactoSeleccionada);
 						this.ventanaContacto.limpiarTextBox();
 						this.llenarTablaContacto();
+						this.llenarDdlContactos();
 					}
 					else 
 					{
@@ -350,7 +358,7 @@ public class Controlador implements ActionListener
 		}
 		
 		private boolean validarFecha(LocalDate textFechaCumpleanios) {
-			if(textFechaCumpleanios.getDayOfMonth() != 1 && textFechaCumpleanios.getMonthValue() != 1 && textFechaCumpleanios.getYear() != 1)
+			if(textFechaCumpleanios.getDayOfMonth() > 0 && textFechaCumpleanios.getMonthValue() > 0 && textFechaCumpleanios.getYear() > 0)
 			{
 				return true;
 			}

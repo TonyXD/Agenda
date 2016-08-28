@@ -27,5 +27,11 @@ public class Localidad {
 	public void updateLocalidad(LocalidadDTO editarLocalidad) {
 		localidad.update(editarLocalidad);
 	}
-	
+
+
+	public int findIdLocalidadByDescrip(String localidad) {
+
+		int idLocalidad = this.localidad.findByDescrip(localidad).getIdLocalidad() ;
+		return idLocalidad;
+	}
 }
