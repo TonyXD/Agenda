@@ -11,27 +11,25 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import dto.LocalidadDTO;
-import presentacion.controlador.Controlador;
 
 public class VentanaLogIn extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private Controlador Controlador;
 	private JButton btn_LogIn;
 
 	//TEXT FIELDS
 	private JTextField txt_Usuario;
 	private JPasswordField txt_Contraseña;
+	private JTextField txt_Entrada;
 
 
-	public VentanaLogIn(Controlador controlador) 
+	public VentanaLogIn() 
 	{
 		super();
-		this.Controlador = controlador;
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 500, 256);
+		setBounds(100, 100, 500, 300);
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 817, 480);
@@ -50,32 +48,41 @@ public class VentanaLogIn extends JFrame
 
 		JLabel lblUsuario = new JLabel("Usuario");
 		lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblUsuario.setBounds(20, 65, 89, 23);
+		lblUsuario.setBounds(20, 136, 89, 23);
 		getContentPane().add(lblUsuario);
 
 		JLabel lblContrasenia = new JLabel("Contrase\u00F1a");
 		lblContrasenia.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblContrasenia.setBounds(20, 113, 89, 23);
+		lblContrasenia.setBounds(20, 181, 89, 23);
 		getContentPane().add(lblContrasenia);
-
-		txt_Usuario = new JTextField();
-		txt_Usuario.setBounds(119, 65, 170, 20);
-		getContentPane().add(txt_Usuario);
-		txt_Usuario.setColumns(10);
 		getContentPane().setLayout(null);
 
+		txt_Usuario = new JTextField();
+		txt_Usuario.setBounds(119, 139, 170, 20);
+		getContentPane().add(txt_Usuario);
+		txt_Usuario.setColumns(10);
+
 		btn_LogIn = new JButton("Conectar");
-		btn_LogIn.setBounds(385, 189, 89, 23);
-		btn_LogIn.addActionListener(this.Controlador);
+		btn_LogIn.setBounds(385, 228, 89, 23);
 		getContentPane().add(btn_LogIn);
 		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(10, 176, 464, 2);
+		separator_1.setBounds(10, 215, 464, 2);
 		getContentPane().add(separator_1);
 		
 		txt_Contraseña = new JPasswordField();
-		txt_Contraseña.setBounds(119, 116, 170, 20);
+		txt_Contraseña.setBounds(119, 184, 170, 20);
 		getContentPane().add(txt_Contraseña);
+		
+		JLabel lblEntrada = new JLabel("Entrada");
+		lblEntrada.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblEntrada.setBounds(20, 89, 71, 23);
+		getContentPane().add(lblEntrada);
+		
+		txt_Entrada = new JTextField();
+		txt_Entrada.setBounds(119, 90, 170, 20);
+		getContentPane().add(txt_Entrada);
+		txt_Entrada.setColumns(10);
 
 		this.setVisible(true);
 	}
@@ -96,12 +103,16 @@ public class VentanaLogIn extends JFrame
 	{
 		return this.btn_LogIn;
 	}
-	public JTextField getDescripcion()
+	public JTextField getUsuario()
 	{
-		return this.txt_Usuario;
+		return txt_Usuario;
 	}
-	public JTextField getCodigoPostar()
+	public JTextField getClave()
 	{
-		return this.txt_Contraseña;
+		return txt_Contraseña;
+	}
+	public JTextField getEntrada()
+	{
+		return txt_Entrada;
 	}
 }

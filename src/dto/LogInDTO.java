@@ -2,6 +2,7 @@ package dto;
 
 public class LogInDTO {
 
+	private String puerto;
 	private String user;
 	private String pass;
 	
@@ -9,6 +10,9 @@ public class LogInDTO {
 	{
 		this.setUser(user);
 		this.setPass(pass);
+	}
+
+	public LogInDTO() {
 	}
 
 	public String getUser() {
@@ -25,6 +29,14 @@ public class LogInDTO {
 
 	public void setPass(String pass) {
 		this.pass = pass;
+	}
+
+	public String getPuerto() {
+		return puerto;
+	}
+
+	public void setPuerto(String puerto) {
+		this.puerto = puerto;
 	}
 	
 }
