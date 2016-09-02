@@ -2,6 +2,8 @@ package dto;
 
 public class LogInDTO {
 
+	private String Schema = "agenda";
+	private String IpLocal = "localhost";
 	private String puerto;
 	private String user;
 	private String pass;
@@ -37,6 +39,22 @@ public class LogInDTO {
 
 	public void setPuerto(String puerto) {
 		this.puerto = puerto;
+	}
+
+	public String getSchema() {
+		return Schema;
+	}
+
+	public void setSchema(String schema) {
+		Schema = schema;
+	}
+
+	public String getIpLocal() {
+		return IpLocal;
+	}
+
+	public void setIpLocal(String ipLocal) {
+		IpLocal = ipLocal;
 	}
 	
 }

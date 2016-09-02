@@ -1,5 +1,6 @@
 package main;
 
+import java.io.File;
 import modelo.Agenda;
 import modelo.Contacto;
 import modelo.Localidad;
@@ -15,9 +16,8 @@ public class Main
 
 	public static void main(String[] args) 
 	{
-		
-		if(false)
-		{
+		File f = new File("conexion.xml");
+		if(f.exists() && !f.isDirectory()) { 
 			Vista vista = new Vista();
 			Agenda modelo = new Agenda();
 			Localidad localidad = new Localidad();

@@ -1,1 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><conexion><LogInDTO><puerto>3306</puerto><user>user</user><pass>user</pass></LogInDTO></conexion>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><LogInDTO><Schema>agenda</Schema><IpLocal>localhost</IpLocal><puerto>3306</puerto><user>root</user><pass>root</pass></LogInDTO>

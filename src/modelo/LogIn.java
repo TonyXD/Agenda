@@ -18,4 +18,8 @@ private LogInDAO logIn;
 	public void setLogIn(LogInDAO logIn) {
 		this.logIn = logIn;
 	}
+
+	public void CreateSchema() {
+		logIn.CreateSchema();
+	}
 }

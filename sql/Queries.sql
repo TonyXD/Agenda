@@ -1,6 +1,22 @@
+CREATE SCHEMA `agenda` ;
+
+CREATE TABLE `agenda`.`personas` (
+  `idPersona` INT NOT NULL,
+  `Nombre` VARCHAR(45) NULL,
+  `Telefono` VARCHAR(45) NULL,
+  `Direccion` VARCHAR(45) NULL,
+  `NroCalle` INT NULL,
+  `NroPiso` INT NULL,
+  `NroDpto` VARCHAR(45) NULL,
+  `DirEmail` VARCHAR(45) NULL,
+  `FechaCumpleaños` DATE NULL,
+  PRIMARY KEY (`idpersona`));
+
+
 CREATE TABLE `agenda`.`localidad` (
   `idLocalidad` INT NOT NULL AUTO_INCREMENT,
-  `Descipcion` VARCHAR(45) NOT NULL,
+  `Descripcion` VARCHAR(45) NOT NULL,
+  `CodigoPostal` INT,
   PRIMARY KEY (`idLocalidad`));
 
   CREATE TABLE `agenda`.`contacto` (
@@ -25,12 +41,3 @@ ADD CONSTRAINT `IdContacto`
   REFERENCES `agenda`.`contacto` (`idContacto`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
-  
-  SELECT P.idPersona, P.Nombre, P.Direccion, P.NroCalle, P.NroPiso, P.NroDpto, P.DirEmail, P.FechaCumpleaños,
-L.idLocalidad, L.Descripcion as DescripcionLocalidad, L.CodigoPostal,
-C.idContacto, C.Descripcion as DescripcionContacto
-FROM personas as P
-join localidad as L
-join contacto as C
-where P.IdLocalidad = L.idLocalidad 
-AND P.IdContacto = C.idContacto
