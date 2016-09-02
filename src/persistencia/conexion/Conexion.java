@@ -27,6 +27,13 @@ public class Conexion
 		}
 		catch(Exception e)
 		{
+			File file = new File("conexion.xml");
+
+    		if(file.delete()){
+    			System.out.println(file.getName() + " is deleted!");
+    		}else{
+    			System.out.println("Delete operation is failed.");
+    		}
 			System.out.println("Conexion fallida");
 		}
 	}	
@@ -81,21 +88,7 @@ public class Conexion
 	        }
 	 
 	    }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public static Conexion getConexion()   
 	{								
 		if(instancia == null)

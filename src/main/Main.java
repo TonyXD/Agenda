@@ -16,7 +16,8 @@ public class Main
 
 	public static void main(String[] args) 
 	{
-		File f = new File("src/persistencia/conexion/conexion.xml");
+		File f = new File("conexion.xml");
+		
 		if(f.exists() && !f.isDirectory()) { 
 			Vista vista = new Vista();
 			Agenda modelo = new Agenda();

@@ -26,7 +26,9 @@ public class XMLGenerator {
 	        if(logIn == null){
 	            System.out.println("ERROR empty ArrayList");
 	            return;
-	        }else{
+	        }
+	        else
+	        {
 
 	            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	            DocumentBuilder builder = factory.newDocumentBuilder();
@@ -63,7 +65,7 @@ public class XMLGenerator {
 	            //Generate XML
 	            Source source = new DOMSource(document);
 	            //Indicamos donde lo queremos almacenar
-	            Result result = new StreamResult(new java.io.File("src/persistencia/conexion/"+name+".xml")); //nombre del archivo
+	            Result result = new StreamResult(new java.io.File(name+".xml")); //nombre del archivo
 	            Transformer transformer = TransformerFactory.newInstance().newTransformer();
 	            transformer.transform(source, result);
 	        }
@@ -77,7 +79,7 @@ public class XMLGenerator {
 			 DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
 						.newInstance();
 				DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-				Document document = docBuilder.parse(new File("src/persistencia/conexion/conexion.xml"));
+				Document document = docBuilder.parse(new File("conexion.xml"));
 
 				NodeList nodeList = document.getElementsByTagName("*");
 				
