@@ -1,4 +1,6 @@
-CREATE SCHEMA `agenda` ;
+CREATE DATABASE IF NOT EXISTS `agenda`;
+USE `agenda`;
+
 
 CREATE TABLE `agenda`.`personas` (
   `idPersona` INT NOT NULL,
